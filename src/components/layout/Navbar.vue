@@ -26,7 +26,7 @@ const data = [
       <input
         type="text"
         name="q"
-        class="w-[400px] h-[50px] py-2 text-base text-black rounded-sm pl-10 outline-none"
+        class="w-[400px] h-[50px] py-2 text-base text-black rounded-sm pl-10 outline-none custom-border border-light-grey"
         placeholder="Singapore, Singapore"
         autocomplete="off"
       />
@@ -49,12 +49,15 @@ const data = [
           {{ city.label }}
         </div>
       </div>
+      <button class="ml-2 text-lg h-[50px] px-12 rounded-sm bg-secondary">
+        Search
+      </button>
     </div>
   </div>
 </template>
 
 <style>
 .custom-border {
-  border-width: 1px;
+  border-width: 2px;
 }
 </style>
