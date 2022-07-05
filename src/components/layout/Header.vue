@@ -78,7 +78,7 @@ const changeCurrency = (currency) => {
 
 <template>
   <header
-    class="bg-white w-[96%] md:w-[85%] mx-auto h-[60px] flex items-center justify-between"
+    class="bg-white w-full px-3 md:px-0 md:w-[85%] mx-auto h-[60px] flex items-center justify-between sm:border-b-2 md:border-none border-light-grey"
   >
     <img
       src="../../assets/SVGs/logo.svg"
