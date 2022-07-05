@@ -21,6 +21,7 @@ import Card from "../utility/Card.vue";
           alt=""
         />
       </section>
+      <Card title="Price per night" :clear-button="true">test</Card>
     </aside>
 
     <!-- Mobile Screen Filter Opener -->
