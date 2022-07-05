@@ -7,10 +7,8 @@ const data = [
 </script>
 
 <template>
-  <div
-    class="text-white h-[70px] bg-primary px-[3%] md:px-[8%] flex items-center"
-  >
-    <div class="relative custom-border rounded border-light-grey">
+  <div class="text-white h-[70px] bg-primary flex items-center">
+    <div class="relative w-[96%] md:w-[85%] mx-auto rounded">
       <span class="absolute inset-y-0 left-0 flex items-center pl-2">
         <button
           type="submit"
