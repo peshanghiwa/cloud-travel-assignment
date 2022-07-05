@@ -1,13 +1,14 @@
 <script setup>
 import Header from "./components/layout/Header.vue";
 import Navbar from "./components/layout/Navbar.vue";
+import Footer from "./components/layout/Footer.vue";
 </script>
 
 <template>
   <Header />
   <Navbar />
   <main></main>
-  <footer></footer>
+  <Footer />
 </template>
 
 <style>
