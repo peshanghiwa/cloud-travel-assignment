@@ -1,6 +1,10 @@
 <script setup>
 import { toRefs } from "vue";
 const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
   modelValue: {
     type: Array,
     default: [],
@@ -9,23 +13,24 @@ const props = defineProps({
 
 defineEmits(["update:modelValue"]);
 
-const { modelValue } = toRefs(props);
+const { modelValue, name } = toRefs(props);
 </script>
 
 <template>
   <div v-for="checkbox in modelValue" :key="checkbox.id">
     <input
       type="checkbox"
-      :id="`checkbox${checkbox.id}`"
+      :id="`${name}-checkbox-${checkbox.id}`"
       v-model="checkbox.value"
       @change="$emit('update:modelValue', modelValue)"
       class="w-[15px] h-[15px] text-primary bg-white rounded border-dark-grey focus:ring-primary accent-primary"
     />
+
     <label
       class="text-sm text-dark-grey relative bottom-[3px] left-2"
-      :for="`checkbox${checkbox.id}`"
+      :for="`${name}-checkbox-${checkbox.id}`"
     >
-      {{ checkbox.title }}
+      <span v-html="checkbox.title" />
     </label>
 
     <span class="float-right text-medium-grey text-sm">
