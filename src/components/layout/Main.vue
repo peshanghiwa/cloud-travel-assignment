@@ -148,12 +148,21 @@ const maxSGDShow = computed(() => {
           />
         </div>
       </Card>
-      <Card title="Reviews" @clear="">
+      <Card
+        title="Reviews"
+        @clear="reviewsCheckboxListData.forEach((list) => (list.value = false))"
+      >
         <CheckboxList :name="'reviews'" v-model="reviewsCheckboxListData" />
       </Card>
-      <Card title="Star Rating" @clear="">
+      <Card
+        title="Star Rating"
+        @clear="ratingsCheckboxListData.forEach((list) => (list.value = false))"
+      >
         <CheckboxList :name="'ratings'" v-model="ratingsCheckboxListData" />
       </Card>
+      <!-- <Card title="Star Rating" @clear="">
+        
+      </Card> -->
     </aside>
 
     <!-- Mobile Screen Filter Opener -->
