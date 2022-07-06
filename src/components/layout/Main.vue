@@ -137,7 +137,6 @@ const maxSGDShow = computed(() => {
             class="appearance-none block w-full text-sm bg-white text-black border border-light-grey rounded h-[30px] px-4 outline-none"
             type="text"
             :value="minSGDShow"
-            @change=""
           />
           <div class="text-lg mx-2 relative bottom-1">__</div>
           <input
@@ -160,9 +159,28 @@ const maxSGDShow = computed(() => {
       >
         <CheckboxList :name="'ratings'" v-model="ratingsCheckboxListData" />
       </Card>
-      <!-- <Card title="Star Rating" @clear="">
-        
-      </Card> -->
+      <Card title="Hotel Name" :clearButton="false">
+        <div class="relative w-full rounded">
+          <input
+            class="appearance-none block w-full text-base bg-white text-black border border-light-grey rounded h-[40px] px-4 outline-none"
+            type="text"
+            placeholder="e.g. Hilton, Ibis ..."
+            autocomplete="off"
+          />
+          <span class="absolute inset-y-0 right-2 flex items-center pl-2">
+            <button
+              type="submit"
+              class="p-1 focus:outline-none focus:shadow-outline"
+            >
+              <img
+                src="../../assets/SVGs/search.svg"
+                class="md:h-[15px] md:w-[15px]"
+                alt="Search Icon"
+              />
+            </button>
+          </span>
+        </div>
+      </Card>
     </aside>
 
     <!-- Mobile Screen Filter Opener -->
