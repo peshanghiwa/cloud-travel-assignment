@@ -8,7 +8,7 @@ const data = [
 
 <template>
   <div
-    class="text-white h-[50px] md:h-[70px] bg-white md:bg-primary flex items-center sticky top-0 sm:border-b-2 md:border-none border-light-grey"
+    class="text-white h-[50px] z-10 md:h-[70px] bg-white md:bg-primary flex items-center sticky top-0 sm:border-b-2 md:border-none border-light-grey"
   >
     <div class="relative w-full px-3 md:px-0 md:w-[85%] mx-auto rounded">
       <span class="absolute inset-y-0 left-0 flex items-center pl-2">
