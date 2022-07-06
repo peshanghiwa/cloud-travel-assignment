@@ -1,6 +1,21 @@
 <script setup>
 import Card from "../utility/Card.vue";
+import Slider from "@vueform/slider";
+import { reactive, toRefs, computed } from "vue";
+
+const data = reactive({
+  rangeSliderValue: [0, 0],
+});
+
+const { rangeSliderValue } = toRefs(data);
+const minSGDShow = computed(() => {
+  return `SGD  ${rangeSliderValue.value[0]}`;
+});
+const maxSGDShow = computed(() => {
+  return `SGD  ${rangeSliderValue.value[1]}`;
+});
 </script>
+
 <template>
   <main
     class="custom-size w-full px-3 lg:px-0 lg:w-[85%] mx-auto flex flex-col lg:flex-row my-0 lg:my-[30px] gap-x-4"
@@ -21,7 +36,32 @@ import Card from "../utility/Card.vue";
           alt=""
         />
       </section>
-      <Card title="Price per night" :clear-button="true">test</Card>
+      <Card title="Price per night" @clear="rangeSliderValue = [0, 0]">
+        <Slider
+          class="mt-7 mb-5"
+          v-model="rangeSliderValue"
+          :tooltips="false"
+          :lazy="false"
+          :min="0"
+          :max="1500"
+        />
+        <div class="flex">
+          <input
+            readonly
+            class="appearance-none block w-full text-sm bg-white text-black border border-light-grey rounded h-[30px] px-4 outline-none"
+            type="text"
+            :value="minSGDShow"
+            @change=""
+          />
+          <div class="text-lg mx-2 relative bottom-1">__</div>
+          <input
+            readonly
+            class="appearance-none block w-full text-sm bg-white text-black border border-light-grey rounded h-[30px] px-4 outline-none"
+            type="text"
+            :value="maxSGDShow"
+          />
+        </div>
+      </Card>
     </aside>
 
     <!-- Mobile Screen Filter Opener -->
