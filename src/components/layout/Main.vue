@@ -2,12 +2,51 @@
 import Card from "../utility/Card.vue";
 import Slider from "@vueform/slider";
 import { reactive, toRefs, computed } from "vue";
+import CheckboxList from "../utility/CheckboxList.vue";
 
 const data = reactive({
   rangeSliderValue: [0, 0],
+  checkboxListData: [
+    {
+      id: 1,
+      title: "Excellent",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 2,
+      title: "Very Good",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 3,
+      title: "Good",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 4,
+      title: "Fair",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 5,
+      title: "Poor",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 6,
+      title: "No Review",
+      number: 999,
+      value: false,
+    },
+  ],
 });
 
-const { rangeSliderValue } = toRefs(data);
+const { rangeSliderValue, checkboxListData } = toRefs(data);
 const minSGDShow = computed(() => {
   return `SGD  ${rangeSliderValue.value[0]}`;
 });
@@ -61,6 +100,9 @@ const maxSGDShow = computed(() => {
             :value="maxSGDShow"
           />
         </div>
+      </Card>
+      <Card title="Reviews" @clear="">
+        <CheckboxList v-model="checkboxListData" />
       </Card>
     </aside>
 
