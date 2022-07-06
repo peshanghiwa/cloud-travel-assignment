@@ -4,9 +4,17 @@ import Slider from "@vueform/slider";
 import { reactive, toRefs, computed } from "vue";
 import CheckboxList from "../utility/CheckboxList.vue";
 
+const starsImgGenerator = (number) => {
+  let stars = '<div class="flex gap-x-[2px]">';
+  for (let i = 0; i < number; i++) {
+    stars += '<img src="/src/assets/SVGs/star.svg" height="15" width="15" />';
+  }
+  return stars + "</div>";
+};
+
 const data = reactive({
   rangeSliderValue: [0, 0],
-  checkboxListData: [
+  reviewsCheckboxListData: [
     {
       id: 1,
       title: "Excellent",
@@ -44,9 +52,48 @@ const data = reactive({
       value: false,
     },
   ],
+  ratingsCheckboxListData: [
+    {
+      id: 1,
+      title: starsImgGenerator(5),
+      number: 999,
+      value: false,
+    },
+    {
+      id: 2,
+      title: starsImgGenerator(4),
+      number: 999,
+      value: false,
+    },
+    {
+      id: 3,
+      title: starsImgGenerator(3),
+      number: 999,
+      value: false,
+    },
+    {
+      id: 4,
+      title: starsImgGenerator(2),
+      number: 999,
+      value: false,
+    },
+    {
+      id: 5,
+      title: starsImgGenerator(1),
+      number: 999,
+      value: false,
+    },
+    {
+      id: 6,
+      title: "No Rating",
+      number: 999,
+      value: false,
+    },
+  ],
 });
 
-const { rangeSliderValue, checkboxListData } = toRefs(data);
+const { rangeSliderValue, reviewsCheckboxListData, ratingsCheckboxListData } =
+  toRefs(data);
 const minSGDShow = computed(() => {
   return `SGD  ${rangeSliderValue.value[0]}`;
 });
@@ -102,7 +149,10 @@ const maxSGDShow = computed(() => {
         </div>
       </Card>
       <Card title="Reviews" @clear="">
-        <CheckboxList v-model="checkboxListData" />
+        <CheckboxList :name="'reviews'" v-model="reviewsCheckboxListData" />
+      </Card>
+      <Card title="Star Rating" @clear="">
+        <CheckboxList :name="'ratings'" v-model="ratingsCheckboxListData" />
       </Card>
     </aside>
 
