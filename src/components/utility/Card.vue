@@ -7,7 +7,7 @@ const props = defineProps({
   },
   clearButton: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 });
 
@@ -18,7 +18,11 @@ const { title, clearButton } = toRefs(props);
   <section class="px-5 py-6 bg-white rounded-lg">
     <div class="flex justify-between mb-4">
       <h2 class="text-base text-black">{{ title }}</h2>
-      <button v-if="clearButton" class="text-sm text-primary font-bold">
+      <button
+        @click="$emit('clear')"
+        v-if="clearButton"
+        class="text-sm text-primary font-bold"
+      >
         CLEAR
       </button>
     </div>
