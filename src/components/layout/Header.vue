@@ -1,5 +1,6 @@
 <script setup>
 import { computed, reactive, toRefs } from "vue";
+
 const data = reactive({
   languages: [
     {
@@ -41,6 +42,7 @@ const data = reactive({
   showCurrenciesDropdown: false,
   showSidebar: false,
 });
+
 const {
   languages,
   currencies,
@@ -49,6 +51,9 @@ const {
   showSidebar,
 } = toRefs(data);
 
+const onOutsideSidebarClick = () => {
+  if (showSidebar.value) showSidebar.value = false;
+};
 // languages dropdown logic
 const renderedLanguages = computed(() =>
   languages.value.filter((language) => !language.selected)
@@ -167,6 +172,7 @@ const changeCurrency = (currency) => {
         <div
           class="overflow-y-auto absolute right-2 w-[180px] py-4 px-3 bg-dark-grey rounded shadow-sm z-50"
           v-if="showSidebar"
+          v-click-outside="onOutsideSidebarClick"
         >
           <ul class="space-y-2">
             <li>
@@ -179,7 +185,8 @@ const changeCurrency = (currency) => {
                   selectedLanguage.name
                 }}</span>
                 <svg
-                  class="w-6 h-6"
+                  class="w-6 h-6 transform transition duration-200"
+                  :class="[showLanguagesDropdown ? 'rotate-180' : '']"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -213,7 +220,8 @@ const changeCurrency = (currency) => {
                   selectedCurrency.name
                 }}</span>
                 <svg
-                  class="w-6 h-6"
+                  class="w-6 h-6 transform transition duration-200"
+                  :class="[showCurrenciesDropdown ? 'rotate-180' : '']"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"

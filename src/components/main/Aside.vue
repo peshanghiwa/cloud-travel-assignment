@@ -14,7 +14,7 @@ const starsImgGenerator = (number) => {
 };
 
 const data = reactive({
-  showSidebarFilters: true,
+  showSidebarFilters: false,
   rangeSliderValue: [0, 0],
   hotelName: "",
   reviewsCheckboxListData: [
@@ -296,6 +296,11 @@ const clearAllFilters = () => {
     item.value = false;
   });
 };
+
+const applyFilters = () => {
+  console.log("applyFilters");
+  showSidebarFilters.value = false;
+};
 </script>
 <template>
   <!-- Filters Container -->
@@ -452,6 +457,7 @@ const clearAllFilters = () => {
       </button>
       <button
         class="h-[40px] w-full text-base bg-primary text-white font-bold rounded"
+        @click="applyFilters"
       >
         Filter
       </button>
