@@ -4,6 +4,14 @@ import Slider from "@vueform/slider";
 import { reactive, toRefs, computed } from "vue";
 import { useWindowSize } from "vue-window-size";
 import CheckboxList from "../utility/CheckboxList.vue";
+import sortbyFilterData from "../../composables/sortbyFilter";
+
+const {
+  sortbyOptionsList,
+  selectedSortbyOption,
+  showSortbyFilters,
+  onSelectSortby,
+} = sortbyFilterData();
 
 const starsImgGenerator = (number) => {
   let stars = '<div class="flex gap-x-[2px]">';
@@ -15,12 +23,6 @@ const starsImgGenerator = (number) => {
 
 const data = reactive({
   showSidebarFilters: true,
-  showSortbyFilters: false,
-  selectedSortby: 1,
-  sortByOptions: [
-    { id: 1, text: "Price (lowest first)" },
-    { id: 2, text: "Price (highest first)" },
-  ],
   rangeSliderValue: [0, 0],
   hotelName: "",
   reviewsCheckboxListData: [
@@ -264,9 +266,6 @@ const { width: windowWidth } = useWindowSize();
 const {
   showSidebarFilters,
   rangeSliderValue,
-  selectedSortby,
-  sortByOptions,
-  showSortbyFilters,
   hotelName,
   reviewsCheckboxListData,
   ratingsCheckboxListData,
@@ -308,23 +307,6 @@ const clearAllFilters = () => {
 
 const applyFilters = () => {
   showSidebarFilters.value = false;
-};
-
-const sortbyOptionsList = computed(() => {
-  return sortByOptions.value.filter((option) => {
-    return option.id !== selectedSortby.value;
-  });
-});
-
-const selectedSortbyOption = computed(() => {
-  return sortByOptions.value.find((option) => {
-    return option.id === selectedSortby.value;
-  });
-});
-
-const onSelectSortby = (value) => {
-  selectedSortby.value = value;
-  showSortbyFilters.value = false;
 };
 </script>
 <template>
