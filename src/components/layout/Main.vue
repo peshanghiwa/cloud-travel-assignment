@@ -154,6 +154,80 @@ const data = reactive({
       value: false,
     },
   ],
+  propertyTypesCheckboxListData: [
+    {
+      id: 0,
+      title: "Hotel",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 1,
+      title: "Hostel/Backpacker accomodation",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 2,
+      title: "Apartment",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 3,
+      title: "Aparthotel",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 4,
+      title: "Resort",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 5,
+      title: "Inn",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 6,
+      title: "Motel",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 7,
+      title: "Bed & breakfast",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 8,
+      title: "Guesthouse",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 9,
+      title: "Condo",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 10,
+      title: "All-inclusive property",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 11,
+      title: "Hostal",
+      number: 999,
+      value: false,
+    },
+  ],
 });
 
 const { rangeSliderValue, reviewsCheckboxListData, ratingsCheckboxListData } =
@@ -266,6 +340,18 @@ const maxSGDShow = computed(() => {
           :unique-id="'meals'"
           v-model="mealPlansCheckboxListData"
           :limit="2"
+        />
+      </Card>
+      <Card
+        title="Property Type"
+        @clear="
+          propertyTypesCheckboxListData.forEach((list) => (list.value = false))
+        "
+      >
+        <CheckboxList
+          :unique-id="'properties'"
+          v-model="propertyTypesCheckboxListData"
+          :limit="3"
         />
       </Card>
     </aside>
