@@ -87,7 +87,7 @@ const changeCurrency = (currency) => {
         alt="Cloud Travel Logo"
       />
       <!-- Large Screen Only -->
-      <ul class="hidden md:flex gap-x-4 z-50">
+      <ul class="hidden md:flex gap-x-4 z-2">
         <li>
           <button
             class="px-3 py-1.5 text-black text-lg transition duration-150 ease-in-out flex items-center"

@@ -13,6 +13,7 @@ const starsImgGenerator = (number) => {
 };
 
 const data = reactive({
+  showSidebarFilters: true,
   rangeSliderValue: [0, 0],
   reviewsCheckboxListData: [
     {
@@ -251,6 +252,7 @@ const data = reactive({
 });
 
 const {
+  showSidebarFilters,
   rangeSliderValue,
   reviewsCheckboxListData,
   ratingsCheckboxListData,
@@ -266,17 +268,24 @@ const minSGDShow = computed(() => {
 const maxSGDShow = computed(() => {
   return `SGD  ${rangeSliderValue.value[1]}`;
 });
+
+const test = () => {
+  showSidebarFilters.value = !showSidebarFilters.value;
+  console.log(showSidebarFilters.value);
+};
 </script>
 
 <template>
   <main
-    class="custom-size w-full px-3 lg:px-0 lg:w-[85%] mx-auto flex flex-col lg:flex-row my-0 lg:my-[30px] gap-x-4"
+    class="custom-size w-full px-0 md:px-3 lg:px-0 lg:w-[85%] mx-auto flex flex-col lg:flex-row my-0 lg:my-[30px] gap-x-4"
   >
     <!-- Filters Container -->
     <aside
-      class="w-full lg:w-[290px] absolute top-0 left-0 bottom-0 right-0 lg:relative hidden lg:flex flex-col gap-y-3"
+      class="w-full lg:w-[290px] absolute top-0 hidden left-0 bottom-0 right-0 lg:relative lg:flex flex-col gap-y-3 z-20"
     >
-      <section class="relative w-full h-[100px] bg-primary rounded-lg">
+      <section
+        class="relative w-full hidden lg:block h-[100px] bg-primary rounded-lg"
+      >
         <button
           class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-base rounded h-[40px] w-[170px] bg-primary"
         >
@@ -297,17 +306,17 @@ const maxSGDShow = computed(() => {
           :min="0"
           :max="1500"
         />
-        <div class="flex">
+        <div class="flex justify-between">
           <input
             readonly
-            class="appearance-none block w-full text-sm bg-white text-black border border-light-grey rounded h-[30px] px-4 outline-none"
+            class="appearance-none block lg:w-full w-[30%] text-sm bg-white text-black border border-light-grey rounded h-[30px] px-4 outline-none"
             type="text"
             :value="minSGDShow"
           />
           <div class="text-lg mx-2 relative bottom-1">__</div>
           <input
             readonly
-            class="appearance-none block w-full text-sm bg-white text-black border border-light-grey rounded h-[30px] px-4 outline-none"
+            class="appearance-none block lg:w-full w-[35%] text-sm bg-white text-black border border-light-grey rounded h-[30px] px-4 outline-none"
             type="text"
             :value="maxSGDShow"
           />
@@ -317,13 +326,19 @@ const maxSGDShow = computed(() => {
         title="Reviews"
         @clear="reviewsCheckboxListData.forEach((list) => (list.value = false))"
       >
-        <CheckboxList :name="'reviews'" v-model="reviewsCheckboxListData" />
+        <CheckboxList
+          :unique-id="'reviews'"
+          v-model="reviewsCheckboxListData"
+        />
       </Card>
       <Card
         title="Star Rating"
         @clear="ratingsCheckboxListData.forEach((list) => (list.value = false))"
       >
-        <CheckboxList :name="'ratings'" v-model="ratingsCheckboxListData" />
+        <CheckboxList
+          :unique-id="'ratings'"
+          v-model="ratingsCheckboxListData"
+        />
       </Card>
       <Card title="Hotel Name" :clearButton="false">
         <div class="relative w-full rounded">
@@ -382,7 +397,6 @@ const maxSGDShow = computed(() => {
           :limit="3"
         />
       </Card>
-
       <Card
         title="Facilities"
         @clear="
@@ -398,10 +412,40 @@ const maxSGDShow = computed(() => {
     <!-- End Filters Container -->
 
     <!-- Mobile Screen Filter Opener -->
-    <aside class="w-full bg-success block lg:hidden">test3</aside>
+    <aside class="bg-white flex lg:hidden">
+      <button
+        class="w-full flex justify-center items-center h-[50px] text-base"
+      >
+        <img
+          src="../../assets/SVGs/filter.svg"
+          class="mr-2"
+          height="16"
+          width="16"
+          alt=""
+        />
+        Sort & Filter
+      </button>
+      <div class="w-[2px] h-[50px] bg-light-grey"></div>
+      <button
+        class="w-full h-[50px] flex justify-center items-center text-base"
+      >
+        <img
+          src="../../assets/SVGs/marker.svg"
+          class="mr-2"
+          height="16"
+          width="16"
+        />
+        Map View
+      </button>
+    </aside>
+    <!-- End Mobile Screen Filter Opener -->
 
     <!-- Main Content -->
-    <section class="grow-0 lg:grow bg-warning">test2</section>
+    <section class="grow-0 lg:grow bg-warning">
+      test2
+
+      <button @click="test">change transition</button>
+    </section>
   </main>
 </template>
 <style>

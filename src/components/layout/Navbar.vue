@@ -25,7 +25,7 @@ const data = [
       </span>
       <input
         type="text"
-        class="w-full md:w-[470px] h-[50px] ml-2 md:ml-0 py-2 text-base text-black rounded-sm pl-8 md:pl-10 outline-none"
+        class="w-full md:w-[470px] h-[50px] text-base text-black rounded-sm pl-10 outline-none"
         placeholder="Singapore, Singapore"
         autocomplete="off"
       />
