@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "@vueform/slider": "^2.0.10",
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-window-size": "^1.1.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3",

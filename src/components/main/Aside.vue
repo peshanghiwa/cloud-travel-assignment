@@ -2,6 +2,7 @@
 import Card from "../utility/Card.vue";
 import Slider from "@vueform/slider";
 import { reactive, toRefs, computed } from "vue";
+import { useWindowSize } from "vue-window-size";
 import CheckboxList from "../utility/CheckboxList.vue";
 
 const starsImgGenerator = (number) => {
@@ -15,6 +16,7 @@ const starsImgGenerator = (number) => {
 const data = reactive({
   showSidebarFilters: true,
   rangeSliderValue: [0, 0],
+  hotelName: "",
   reviewsCheckboxListData: [
     {
       id: 1,
@@ -251,9 +253,12 @@ const data = reactive({
   ],
 });
 
+const { width: windowWidth } = useWindowSize();
+
 const {
   showSidebarFilters,
   rangeSliderValue,
+  hotelName,
   reviewsCheckboxListData,
   ratingsCheckboxListData,
   reservationsCheckboxListData,
@@ -268,12 +273,50 @@ const minSGDShow = computed(() => {
 const maxSGDShow = computed(() => {
   return `SGD  ${rangeSliderValue.value[1]}`;
 });
+
+const clearAllFilters = () => {
+  rangeSliderValue.value = [0, 0];
+  hotelName.value = "";
+  reviewsCheckboxListData.value.forEach((item) => {
+    item.value = false;
+  });
+  ratingsCheckboxListData.value.forEach((item) => {
+    item.value = false;
+  });
+  reservationsCheckboxListData.value.forEach((item) => {
+    item.value = false;
+  });
+  mealPlansCheckboxListData.value.forEach((item) => {
+    item.value = false;
+  });
+  propertyTypesCheckboxListData.value.forEach((item) => {
+    item.value = false;
+  });
+  facilitiesCheckboxListData.value.forEach((item) => {
+    item.value = false;
+  });
+};
 </script>
 <template>
   <!-- Filters Container -->
   <aside
+    v-if="windowWidth > 975 || showSidebarFilters"
     class="w-full lg:w-[290px] absolute top-0 left-0 bottom-0 right-0 lg:relative lg:flex flex-col gap-y-3 z-20 lg:z-0"
   >
+    <div
+      v-if="windowWidth < 975 && showSidebarFilters"
+      class="h-[55px] bg-white border-b-[2px] border-b-light-grey fixed top-0 left-0 right-0 z-30 text-lg flex items-center px-5"
+    >
+      <img
+        src="../../assets/SVGs/close.svg"
+        height="15"
+        width="15"
+        class="mr-5 cursor-pointer"
+        alt=""
+        @click="showSidebarFilters = false"
+      />
+      <span> Sort & Filter </span>
+    </div>
     <section
       class="relative w-full hidden lg:block h-[100px] bg-primary rounded-lg"
     >
@@ -288,7 +331,11 @@ const maxSGDShow = computed(() => {
         alt=""
       />
     </section>
-    <Card title="Price per night" @clear="rangeSliderValue = [0, 0]">
+    <Card
+      title="Price per night"
+      @clear="rangeSliderValue = [0, 0]"
+      class="mt-[50px] lg:mt-0"
+    >
       <Slider
         class="mt-7 mb-5"
         v-model="rangeSliderValue"
@@ -332,6 +379,7 @@ const maxSGDShow = computed(() => {
           type="text"
           placeholder="e.g. Hilton, Ibis ..."
           autocomplete="off"
+          v-model="hotelName"
         />
         <span class="absolute inset-y-0 right-2 flex items-center pl-2">
           <button
@@ -382,6 +430,7 @@ const maxSGDShow = computed(() => {
     </Card>
     <Card
       title="Facilities"
+      class="pb-[80px] lg:pb-0"
       @clear="
         facilitiesCheckboxListData.forEach((list) => (list.value = false))
       "
@@ -391,12 +440,31 @@ const maxSGDShow = computed(() => {
         v-model="facilitiesCheckboxListData"
       />
     </Card>
+    <div
+      v-if="windowWidth < 975 && showSidebarFilters"
+      class="h-[60px] bg-white border-t-[2px] border-t-light-grey fixed bottom-0 left-0 right-0 z-30 text-lg flex items-center px-5 gap-x-5"
+    >
+      <button
+        class="h-[40px] w-full border-primary border-[3px] font-bold text-base rounded"
+        @click="clearAllFilters"
+      >
+        Clear
+      </button>
+      <button
+        class="h-[40px] w-full text-base bg-primary text-white font-bold rounded"
+      >
+        Filter
+      </button>
+    </div>
   </aside>
   <!-- End Filters Container -->
 
   <!-- Mobile Screen Filter Opener -->
   <div class="bg-white flex lg:hidden">
-    <button class="w-full flex justify-center items-center h-[50px] text-base">
+    <button
+      @click="showSidebarFilters = true"
+      class="w-full flex justify-center items-center h-[50px] text-base"
+    >
       <img
         src="../../assets/SVGs/filter.svg"
         class="mr-2"
