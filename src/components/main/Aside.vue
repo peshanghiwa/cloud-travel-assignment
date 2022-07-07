@@ -14,7 +14,13 @@ const starsImgGenerator = (number) => {
 };
 
 const data = reactive({
-  showSidebarFilters: false,
+  showSidebarFilters: true,
+  showSortbyFilters: false,
+  selectedSortby: 1,
+  sortByOptions: [
+    { id: 1, text: "Price (lowest first)" },
+    { id: 2, text: "Price (highest first)" },
+  ],
   rangeSliderValue: [0, 0],
   hotelName: "",
   reviewsCheckboxListData: [
@@ -258,6 +264,9 @@ const { width: windowWidth } = useWindowSize();
 const {
   showSidebarFilters,
   rangeSliderValue,
+  selectedSortby,
+  sortByOptions,
+  showSortbyFilters,
   hotelName,
   reviewsCheckboxListData,
   ratingsCheckboxListData,
@@ -298,8 +307,24 @@ const clearAllFilters = () => {
 };
 
 const applyFilters = () => {
-  console.log("applyFilters");
   showSidebarFilters.value = false;
+};
+
+const sortbyOptionsList = computed(() => {
+  return sortByOptions.value.filter((option) => {
+    return option.id !== selectedSortby.value;
+  });
+});
+
+const selectedSortbyOption = computed(() => {
+  return sortByOptions.value.find((option) => {
+    return option.id === selectedSortby.value;
+  });
+});
+
+const onSelectSortby = (value) => {
+  selectedSortby.value = value;
+  showSortbyFilters.value = false;
 };
 </script>
 <template>
@@ -336,11 +361,43 @@ const applyFilters = () => {
         alt=""
       />
     </section>
-    <Card
-      title="Price per night"
-      @clear="rangeSliderValue = [0, 0]"
-      class="mt-[50px] lg:mt-0"
+    <div
+      v-if="windowWidth < 975 && showSidebarFilters"
+      class="h-[40px] bg-background flex items-center font-bold text-base px-5 mt-[55px] lg:mt-0 text-primary"
     >
+      Sort by
+    </div>
+    <div
+      v-if="windowWidth < 975 && showSidebarFilters"
+      class="h-[50px] bg-white flex items-center cursor-pointer justify-between text-base px-5 text-black"
+      @click="showSortbyFilters = !showSortbyFilters"
+    >
+      <span> {{ selectedSortbyOption.text }} </span>
+      <img
+        src="../../assets/SVGs/arrow-down.svg"
+        height="10"
+        width="10"
+        class="transform transition duration-200"
+        :class="[showSortbyFilters ? 'rotate-180' : 'rotate-0']"
+        alt=""
+      />
+    </div>
+    <div
+      v-if="showSortbyFilters"
+      v-for="(option, index) in sortbyOptionsList"
+      :key="index"
+      class="h-[50px] bg-white hover:bg-light-grey cursor-pointer text-base px-5 flex items-center"
+      @click="onSelectSortby(option.id)"
+    >
+      {{ option.text }}
+    </div>
+    <div
+      v-if="windowWidth < 975 && showSidebarFilters"
+      class="h-[40px] bg-background flex items-center font-bold text-base px-5 text-primary"
+    >
+      Filter by
+    </div>
+    <Card title="Price per night" @clear="rangeSliderValue = [0, 0]" class="">
       <Slider
         class="mt-7 mb-5"
         v-model="rangeSliderValue"
