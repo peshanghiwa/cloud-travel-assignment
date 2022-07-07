@@ -26,6 +26,8 @@ const selectedSortbyOption = computed(() => {
 const onSelectSortby = (value) => {
   selectedSortby.value = value;
   showSortbyFilters.value = false;
+
+  console.log(showSortbyFilters.value);
 };
 
 export default () => ({

@@ -22,7 +22,7 @@ const starsImgGenerator = (number) => {
 };
 
 const data = reactive({
-  showSidebarFilters: true,
+  showSidebarFilters: false,
   rangeSliderValue: [0, 0],
   hotelName: "",
   reviewsCheckboxListData: [
@@ -365,11 +365,11 @@ const applyFilters = () => {
       />
     </div>
     <div
-      v-if="showSortbyFilters"
-      v-for="(option, index) in sortbyOptionsList"
-      :key="index"
-      class="h-[50px] bg-white hover:bg-light-grey cursor-pointer text-base px-5 flex items-center"
+      v-if="showSortbyFilters && windowWidth < 975"
+      v-for="option in sortbyOptionsList"
+      :key="option.id"
       @click="onSelectSortby(option.id)"
+      class="h-[50px] bg-white hover:bg-light-grey cursor-pointer text-base px-5 flex items-center"
     >
       {{ option.text }}
     </div>

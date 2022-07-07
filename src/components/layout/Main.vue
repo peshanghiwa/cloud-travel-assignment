@@ -1,5 +1,6 @@
 <script setup>
 import Aside from "../main/Aside.vue";
+import MainContent from "../main/MainContent.vue";
 </script>
 
 <template>
@@ -7,9 +8,7 @@ import Aside from "../main/Aside.vue";
     class="custom-size w-full px-0 lg:px-0 lg:w-[85%] mx-auto flex flex-col lg:flex-row my-0 lg:my-[30px] gap-x-4"
   >
     <Aside />
-
-    <!-- Main Content -->
-    <section class="grow-0 lg:grow bg-warning">test2</section>
+    <MainContent />
   </main>
 </template>
 <style>
