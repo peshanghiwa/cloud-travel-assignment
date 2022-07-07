@@ -110,6 +110,50 @@ const data = reactive({
       value: false,
     },
   ],
+  mealPlansCheckboxListData: [
+    {
+      id: 1,
+      title: "Room only",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 2,
+      title: "Breakfast",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 3,
+      title: "Lunch",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 4,
+      title: "Dinner",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 5,
+      title: "Half board",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 6,
+      title: "Full board",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 7,
+      title: "All inclusive",
+      number: 999,
+      value: false,
+    },
+  ],
 });
 
 const { rangeSliderValue, reviewsCheckboxListData, ratingsCheckboxListData } =
@@ -210,6 +254,18 @@ const maxSGDShow = computed(() => {
         <CheckboxList
           :unique-id="'reservations'"
           v-model="reservationsCheckboxListData"
+        />
+      </Card>
+      <Card
+        title="Meal Plan"
+        @clear="
+          mealPlansCheckboxListData.forEach((list) => (list.value = false))
+        "
+      >
+        <CheckboxList
+          :unique-id="'meals'"
+          v-model="mealPlansCheckboxListData"
+          :limit="2"
         />
       </Card>
     </aside>
