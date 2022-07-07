@@ -90,6 +90,26 @@ const data = reactive({
       value: false,
     },
   ],
+  reservationsCheckboxListData: [
+    {
+      id: 1,
+      title: "Free cancellation",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 2,
+      title: "Book now, pay later",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 3,
+      title: "Pay at hotel",
+      number: 999,
+      value: false,
+    },
+  ],
 });
 
 const { rangeSliderValue, reviewsCheckboxListData, ratingsCheckboxListData } =
@@ -181,7 +201,19 @@ const maxSGDShow = computed(() => {
           </span>
         </div>
       </Card>
+      <Card
+        title="Reservation Policy"
+        @clear="
+          reservationsCheckboxListData.forEach((list) => (list.value = false))
+        "
+      >
+        <CheckboxList
+          :unique-id="'reservations'"
+          v-model="reservationsCheckboxListData"
+        />
+      </Card>
     </aside>
+    <!-- End Filters Container -->
 
     <!-- Mobile Screen Filter Opener -->
     <aside class="w-full bg-success block lg:hidden">test3</aside>
