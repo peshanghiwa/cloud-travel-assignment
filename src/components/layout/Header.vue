@@ -77,7 +77,7 @@ const changeCurrency = (currency) => {
 </script>
 
 <template>
-  <header class="bg-white sm:border-b-2 md:border-none border-light-grey">
+  <header class="bg-white border-b-2 md:border-none border-light-grey">
     <div
       class="w-full px-3 md:px-0 md:w-[85%] mx-auto h-[60px] flex items-center justify-between"
     >
