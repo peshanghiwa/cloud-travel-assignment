@@ -228,10 +228,38 @@ const data = reactive({
       value: false,
     },
   ],
+  facilitiesCheckboxListData: [
+    {
+      id: 1,
+      title: "Swimming pool",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 2,
+      title: "Internet access",
+      number: 999,
+      value: false,
+    },
+    {
+      id: 3,
+      title: "Non-smoking floor",
+      number: 999,
+      value: false,
+    },
+  ],
 });
 
-const { rangeSliderValue, reviewsCheckboxListData, ratingsCheckboxListData } =
-  toRefs(data);
+const {
+  rangeSliderValue,
+  reviewsCheckboxListData,
+  ratingsCheckboxListData,
+  reservationsCheckboxListData,
+  mealPlansCheckboxListData,
+  propertyTypesCheckboxListData,
+  facilitiesCheckboxListData,
+} = toRefs(data);
+
 const minSGDShow = computed(() => {
   return `SGD  ${rangeSliderValue.value[0]}`;
 });
@@ -352,6 +380,18 @@ const maxSGDShow = computed(() => {
           :unique-id="'properties'"
           v-model="propertyTypesCheckboxListData"
           :limit="3"
+        />
+      </Card>
+
+      <Card
+        title="Facilities"
+        @clear="
+          facilitiesCheckboxListData.forEach((list) => (list.value = false))
+        "
+      >
+        <CheckboxList
+          :unique-id="'facilities'"
+          v-model="facilitiesCheckboxListData"
         />
       </Card>
     </aside>
