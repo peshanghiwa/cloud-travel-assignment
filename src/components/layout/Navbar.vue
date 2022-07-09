@@ -1,9 +1,20 @@
 <script setup>
+import locationSearchData from "../../composables/locationSearch";
+import { useWindowSize } from "vue-window-size";
 const data = [
   { label: "Singapore, Singapore", cityCode: "sgsg" },
   { label: "Kuala Lumpur, Malaysia", cityCode: "klmy" },
   { label: "Manila, Philippines", cityCode: "mlph" },
 ];
+const { showLocationSearch } = locationSearchData();
+const { width: windowWidth } = useWindowSize();
+const toggleLocationSearch = () => {
+  if (windowWidth.value < 768 && !showLocationSearch.value) {
+    showLocationSearch.value = true;
+  } else {
+    showLocationSearch.value = false;
+  }
+};
 </script>
 
 <template>
@@ -28,6 +39,7 @@ const data = [
         class="w-full md:w-[470px] h-[50px] text-base text-black rounded-sm pl-10 outline-none"
         placeholder="Singapore, Singapore"
         autocomplete="off"
+        @click="toggleLocationSearch"
       />
       <div
         v-if="false"

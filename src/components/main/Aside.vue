@@ -1,10 +1,13 @@
 <script setup>
 import Card from "../utility/Card.vue";
+import locationSearchData from "../../composables/locationSearch";
 import Slider from "@vueform/slider";
 import { reactive, toRefs, computed } from "vue";
 import { useWindowSize } from "vue-window-size";
 import CheckboxList from "../utility/CheckboxList.vue";
 import sortbyFilterData from "../../composables/sortbyFilter";
+
+let { showLocationSearch } = locationSearchData();
 
 const {
   sortbyOptionsList,
@@ -22,6 +25,11 @@ const starsImgGenerator = (number) => {
 };
 
 const data = reactive({
+  cityCodes: [
+    { label: "Singapore, Singapore", cityCode: "sgsg" },
+    { label: "Kuala Lumpur, Malaysia", cityCode: "klmy" },
+    { label: "Manila, Philippines", cityCode: "mlph" },
+  ],
   showSidebarFilters: false,
   rangeSliderValue: [0, 0],
   hotelName: "",
@@ -273,6 +281,7 @@ const {
   mealPlansCheckboxListData,
   propertyTypesCheckboxListData,
   facilitiesCheckboxListData,
+  cityCodes,
 } = toRefs(data);
 
 const minSGDShow = computed(() => {
@@ -327,7 +336,7 @@ const applyFilters = () => {
         alt=""
         @click="showSidebarFilters = false"
       />
-      <span> Sort & Filter </span>
+      <span class="font-bold"> Sort & Filter </span>
     </div>
     <section
       class="relative w-full hidden lg:block h-[100px] bg-primary rounded-lg"
@@ -486,16 +495,16 @@ const applyFilters = () => {
     </Card>
     <div
       v-if="windowWidth < 975 && showSidebarFilters"
-      class="h-[60px] bg-white border-t-[2px] border-t-light-grey fixed bottom-0 left-0 right-0 z-30 text-lg flex items-center px-5 gap-x-5"
+      class="h-[60px] bg-white border-t-[2px] border-t-light-grey fixed bottom-0 left-0 right-0 z-30 text-lg flex items-center px-5"
     >
       <button
-        class="h-[40px] w-full border-primary border-[3px] font-bold text-base rounded"
+        class="h-[40px] w-full border-primary border-[2px] font-bold text-base rounded mr-2"
         @click="clearAllFilters"
       >
         Clear
       </button>
       <button
-        class="h-[40px] w-full text-base bg-primary text-white font-bold rounded"
+        class="h-[40px] w-full text-base bg-primary text-white font-bold rounded ml-2"
         @click="applyFilters"
       >
         Filter
@@ -503,6 +512,73 @@ const applyFilters = () => {
     </div>
   </aside>
   <!-- End Filters Container -->
+
+  <!-- Location search container -->
+  <aside
+    v-if="windowWidth > 975 || showLocationSearch"
+    class="w-full lg:w-[290px] absolute top-0 left-0 bottom-0 right-0 lg:hidden flex-col gap-y-3 z-20 lg:z-0 bg-white px-4"
+  >
+    <div
+      v-if="windowWidth < 975 || showLocationSearch"
+      class="h-[55px] bg-white border-b-[2px] border-b-light-grey fixed top-0 left-0 right-0 z-30 text-lg flex items-center px-5"
+    >
+      <img
+        src="../../assets/SVGs/close.svg"
+        height="15"
+        width="15"
+        class="mr-5 cursor-pointer"
+        @click="showLocationSearch = false"
+      />
+      <span class="font-bold"> Where? </span>
+    </div>
+    <div
+      class="relative w-full md:w-[85%] rounded mt-[75px] border-[1px] border-light-grey"
+    >
+      <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+        <button
+          type="submit"
+          class="p-1 focus:outline-none focus:shadow-outline"
+        >
+          <img
+            src="../../assets/SVGs/search.svg"
+            class="h-[17px] w-[17px]"
+            alt="Search Icon"
+          />
+        </button>
+      </span>
+      <input
+        type="text"
+        class="w-full md:w-[470px] h-[40px] text-base text-black rounded-sm pl-10 outline-none"
+        placeholder="Singapore, Singapore"
+        autocomplete="off"
+      />
+      <div
+        v-if="false"
+        class="w-full md:w-[470px] absolute custom-border rounded top-12 md:top-[55px] left-0 bg-white border-light-grey text-black z-40"
+      >
+        <div
+          v-for="city in cityCodes"
+          :key="city.cityCode"
+          class="bg-white cursor-pointer hover:bg-light-grey text-black p-3 flex"
+        >
+          <img
+            src="../../assets/SVGs/location.svg"
+            height="15"
+            width="15"
+            class="mr-2"
+            alt=""
+          />
+          {{ city.label }}
+        </div>
+      </div>
+    </div>
+    <button
+      class="text-white text-base h-[40px] mt-4 px-12 rounded-sm bg-secondary"
+    >
+      Search
+    </button>
+  </aside>
+  <!-- End Location search container -->
 
   <!-- Mobile Screen Filter Opener -->
   <div class="bg-white flex lg:hidden">

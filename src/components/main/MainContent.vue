@@ -154,7 +154,7 @@ const scrollTop = () => {
           ></path>
         </svg>
       </div>
-      <h1 class="text-lg font-bold mt-4 lg:mt-0">
+      <h1 class="text-lg font-bold mt-4 md:mt-0">
         Singapore: 9999 properties found
       </h1>
       <section
@@ -217,7 +217,7 @@ const scrollTop = () => {
       </section>
       <article class="mt-5">
         <PropertyCard
-          v-if="false"
+          v-if="true"
           v-for="card in propertyCards"
           :key="card.id"
           :title="card.title"
