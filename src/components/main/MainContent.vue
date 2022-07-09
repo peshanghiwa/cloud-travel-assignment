@@ -246,7 +246,6 @@ const scrollTop = () => {
       </div>
       <div class="flex items-center text-base gap-4">
         <span class="hidden lg:inline">showing result 1 - 20 of 9999</span>
-        <!-- Pssst, vue-awesome-paginate is my own NPM package 🙃 -->
         <vue-awesome-paginate
           :total-items="255"
           :items-per-page="20"
