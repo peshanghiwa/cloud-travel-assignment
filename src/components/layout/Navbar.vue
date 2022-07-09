@@ -31,7 +31,7 @@ const data = [
       />
       <div
         v-if="false"
-        class="w-full md:w-[470px] absolute custom-border rounded top-12 md:top-[55px] left-0 bg-white border-light-grey text-black"
+        class="w-full md:w-[470px] absolute custom-border rounded top-12 md:top-[55px] left-0 bg-white border-light-grey text-black z-40"
       >
         <div
           v-for="city in data"
