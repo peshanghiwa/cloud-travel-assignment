@@ -34,7 +34,7 @@ const setSelectedFilter = (id) => {
       ></div>
       <div
         v-if="filterDropdown"
-        class="absolute rounded overflow-hidden w-full top-[35px] right-[0px] bg-white shadow-xl"
+        class="absolute rounded overflow-hidden w-full top-[35px] right-[0px] bg-white shadow-xl z-10"
       >
         <button
           class="w-full h-[35px] hover:bg-light-grey flex items-center justify-between px-3"
@@ -42,7 +42,7 @@ const setSelectedFilter = (id) => {
         >
           <span>Popularity</span>
           <img
-            src="../../assets/SVGs/tick.svg"
+            src="../../assets/SVGs/check.svg"
             width="18"
             :class="{
               hidden: selectedfilter !== 1,
@@ -56,7 +56,7 @@ const setSelectedFilter = (id) => {
         >
           <span>Reviews</span>
           <img
-            src="../../assets/SVGs/tick.svg"
+            src="../../assets/SVGs/check.svg"
             width="18"
             :class="{
               hidden: selectedfilter !== 2,
@@ -70,7 +70,7 @@ const setSelectedFilter = (id) => {
         >
           <span>Discount</span>
           <img
-            src="../../assets/SVGs/tick.svg"
+            src="../../assets/SVGs/check.svg"
             width="18"
             :class="{
               hidden: selectedfilter !== 3,
@@ -110,7 +110,7 @@ const setSelectedFilter = (id) => {
         Popularity
       </button>
       <div
-        class="w-full h-full border-r-[1px] cursor-pointer border-r-light-grey flex justify-center items-center relative"
+        class="w-full h-full border-r-[1px] cursor-pointer border-r-light-grey flex justify-center items-center relative z-30"
       >
         <div
           class="w-full h-full absolute top-0 left-0"
