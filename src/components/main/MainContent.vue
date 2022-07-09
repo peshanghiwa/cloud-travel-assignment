@@ -131,7 +131,40 @@ const setSelectedFilter = (id) => {
           class="w-full h-full absolute top-[50px] bg-white rounded-md shadow-md hover:bg-primary hover:text-white transition-all duration-150"
         >
           {{ option.text }}
+    <!-- Pagination (Bottom) Section -->
+    <section class="flex flex-col lg:flex-row justify-between my-10 lg:my-0">
+      <div class="flex justify-between mb-5 lg:mb-0">
+        <button class="text-primary text-base" @click="scrollTop">
+          Back to top
         </button>
+
+        <span class="inline lg:hidden">showing result 1 - 20 of 9999</span>
+      </div>
+      <div class="flex items-center text-base gap-4">
+        <span class="hidden lg:inline">showing result 1 - 20 of 9999</span>
+        <!-- Pssst, vue-awesome-paginate is my own NPM package 🙃 -->
+        <vue-awesome-paginate
+          :total-items="255"
+          :items-per-page="20"
+          :max-pages-shown="6"
+          :current-page="1"
+        >
+          <template #prev-button>
+            <span>
+              <img
+                src="../../assets/SVGs/next.svg"
+                height="9"
+                width="9"
+                class="transform rotate-180"
+              />
+            </span>
+          </template>
+          <template #next-button>
+            <span>
+              <img src="../../assets/SVGs/next.svg" height="9" width="9" />
+            </span>
+          </template>
+        </vue-awesome-paginate>
       </div>
       <button
         class="w-full h-full border-r-[1px] border-r-light-grey flex justify-center items-center transition-all duration-150"
