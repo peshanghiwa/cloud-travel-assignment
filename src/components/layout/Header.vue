@@ -54,6 +54,14 @@ const {
 const onOutsideSidebarClick = () => {
   if (showSidebar.value) showSidebar.value = false;
 };
+
+const closeLanguagesDropdown = () => {
+  showLanguagesDropdown.value = false;
+};
+
+const closeCurrenciesDropdown = () => {
+  showCurrenciesDropdown.value = false;
+};
 // languages dropdown logic
 const renderedLanguages = computed(() =>
   languages.value.filter((language) => !language.selected)
@@ -109,7 +117,8 @@ const changeCurrency = (currency) => {
             />
           </button>
           <ul
-            class="absolute text-base py-1 list-none shadow-lg m-0"
+            v-click-outside="closeLanguagesDropdown"
+            class="absolute text-base py-1 list-none shadow-lg m-0 z-[100]"
             v-if="showLanguagesDropdown"
           >
             <li
@@ -138,7 +147,8 @@ const changeCurrency = (currency) => {
             />
           </button>
           <ul
-            class="absolute text-base py-1 list-none shadow-lg m-0"
+            v-click-outside="closeCurrenciesDropdown"
+            class="absolute text-base py-1 list-none shadow-lg m-0 z-[100]"
             v-if="showCurrenciesDropdown"
           >
             <li
