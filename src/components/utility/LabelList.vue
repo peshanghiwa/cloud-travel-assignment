@@ -45,17 +45,9 @@ const listToShow = computed(() => {
       </div>
       <template #content>
         <div class="bg-dark-grey grid grid-cols-2 gap-x-7 gap-y-2">
-          <div class="flex gap-2">
+          <div v-for="(item, index) in list" class="flex gap-2">
             <img src="../../assets/SVGs/check.svg" height="20" alt="" />
-            <span class="text-sm text-white">Breakfast</span>
-          </div>
-          <div class="flex gap-2">
-            <img src="../../assets/SVGs/check.svg" height="20" alt="" />
-            <span class="text-sm text-white">Lunch</span>
-          </div>
-          <div class="flex gap-2">
-            <img src="../../assets/SVGs/check.svg" height="20" alt="" />
-            <span class="text-sm text-white">Dinner</span>
+            <span class="text-sm text-white">{{ item }}</span>
           </div>
         </div>
       </template>

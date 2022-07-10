@@ -142,6 +142,14 @@ const generateLabels = (foodCode, freeCancellation, payLater, payAtHotel) => {
     labels.push("Pay At Hotel");
   }
 
+  /**
+   * Warning:
+   *  All of the properties have less than or maximum 3 labels in the api response.
+   *  So I have manually added free wifi and free parking labels to the labels array down below so that there will be more than 3 labels in the UI for some of the properties. (This is mandetory to show the other hidden labels in the + button as requested in the )
+   */
+  labels.push("Free WiFi");
+  labels.push("Free Parking");
+
   return labels;
 };
 
