@@ -15,7 +15,6 @@ defineProps({
   },
   comment: {
     type: String,
-    required: true,
   },
   labels: {
     type: Array,
@@ -23,7 +22,6 @@ defineProps({
   },
   health: {
     type: String,
-    required: true,
   },
   mainImage: {
     type: String,
@@ -42,6 +40,21 @@ defineProps({
     required: true,
   },
 });
+
+const generateStars = (number) => {
+  let numberClone = number;
+  const stars = [];
+  for (let i = 0; i < number; i++) {
+    if (numberClone >= 1) {
+      stars.push("full");
+      numberClone--;
+    } else if (numberClone > 0 && numberClone < 1) {
+      stars.push("half");
+    }
+  }
+
+  return stars;
+};
 </script>
 
 <template>
@@ -69,13 +82,20 @@ defineProps({
         {{ title }}
 
         <span class="flex">
-          <img
-            src="../../assets/SVGs/star.svg"
-            v-for="i in stars"
-            :key="i"
-            class="h-[12px] w-[12px] md:h-[16px] md:w-[16px]"
-            alt=""
-          />
+          <template v-for="star in generateStars(stars)">
+            <img
+              v-if="star === 'full'"
+              src="../../assets/SVGs/full-star.svg"
+              class="h-[12px] w-[12px] md:h-[16px] md:w-[16px]"
+              alt=""
+            />
+            <img
+              v-if="star === 'half'"
+              src="../../assets/SVGs/half-star.svg"
+              class="h-[12px] w-[12px] md:h-[16px] md:w-[16px]"
+              alt=""
+            />
+          </template>
         </span>
       </h2>
       <p class="text-xs md:text-sm mt-1">
@@ -86,13 +106,14 @@ defineProps({
         </span>
       </p>
       <p
+        v-if="comment"
         :class="`text-sm text-medium-grey truncate xl:w-[600px] w-[300px] mt-2 hidden md:block`"
       >
         "{{ comment }}"
       </p>
 
       <LabelList :list="labels" class="mt-2 hidden md:flex" />
-      <div class="gap-2 mt-3 hidden md:flex">
+      <div v-if="health" class="gap-2 mt-3 hidden md:flex">
         <img src="../../assets/SVGs/health.svg" height="20" alt="" />
         <span class="text-sm">{{ health }}</span>
       </div>
@@ -119,10 +140,10 @@ defineProps({
         <div class="flex items-end gap-2">
           <span
             v-if="discount && discount > 0"
-            class="text-medium-grey md:text-sm text-xs line-through mb-0 md:mb-[4px]"
+            class="text-medium-grey md:text-xs text-xs line-through mb-0 md:mb-[4px]"
             >SGD {{ price }}</span
           >
-          <span class="text-black font-bold text-base md:text-xl"
+          <span class="text-black font-bold text-base md:text-[20px]"
             >SGD {{ (price - price * (discount / 100)).toFixed(0) }}</span
           >
         </div>
