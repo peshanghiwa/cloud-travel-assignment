@@ -12,9 +12,10 @@ let {
   showSuggestions,
   locationSearchLoading,
   onSelectCity,
-  locationSearchData,
   fetchLocationSearch,
+  locationSearchInput,
   filteredLocationSearchData,
+  searchProperties,
 } = locationSearchStore();
 
 const {
@@ -565,6 +566,7 @@ const openSuggestions = async () => {
         placeholder="Singapore, Singapore"
         autocomplete="off"
         @click="openSuggestions"
+        v-model="locationSearchInput"
       />
       <span
         v-if="
@@ -610,6 +612,7 @@ const openSuggestions = async () => {
       </div>
     </div>
     <button
+      @click="searchProperties"
       class="text-white text-base h-[40px] mt-4 px-12 rounded-sm bg-secondary"
     >
       Search

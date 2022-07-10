@@ -3,8 +3,15 @@ import sortbyFilterData from "../../composables/sortbyFilter";
 import { reactive, toRefs } from "vue";
 import PropertyCard from "./PropertyCard.vue";
 import Shimmer from "./shimmer.vue";
-// import PropertyCardShimmer from "./propertyCardShimmer.vue";
+import locationSearch from "../../composables/locationSearch";
+
+const {
+  getProperiesLoading,
+  properties,
   getPropertiesError,
+  propertiesPagination,
+  selectedCityNameToShow,
+} = locationSearch();
 
 const {
   sortbyOptionsList,
@@ -16,60 +23,22 @@ const {
 const data = reactive({
   selectedfilter: 1,
   filterDropdown: false,
-  propertyCards: [
-    {
-      id: 1,
-      title: "The Fullerton Bay Hotel",
-      stars: 5,
-      location: "80 Collyer quay, Marina Bay, Singapore, Singapore, 049326",
-      comment: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
-      labels: [
-        "breakfast",
-        "lunch",
-        "dinner",
-        "snack",
-        "drink",
-        "dessert",
-        "coffee",
-        "tea",
-        "free cancellation",
-        "free parking",
-        "free wifi",
-      ],
-      health: "Singapore - SG Clean",
-      mainImage: "src/assets/images/hotel-1.png",
-      images: [
-        "src/assets/images/hotel-2.png",
-        "src/assets/images/hotel-3.png",
-        "src/assets/images/hotel-4.png",
-        "src/assets/images/hotel-5.png",
-      ],
-      price: 120,
-      discount: 16,
-    },
-    {
-      id: 2,
-      title: "The Istanbul Hotel",
-      stars: 3,
-      location: "25 Hengim, sirana, Istanbul, Istanbul, 1345672 ",
-      comment:
-        "Lorem ipsum dolor, sit amet consectetur asd a dfs d asd  fgdfgdfg  dfgs sdf sdf fdg df g asd asd gfsdgsdfa dsas da fsd sdfg sdf asdad ipisicing elit. Nihil voluptates tempore nesciunt?",
-      labels: ["breakfast", "lunch"],
-      health: "Istanbul - IS Clean",
-      mainImage: "src/assets/images/hotel-1.png",
-      images: [
-        "src/assets/images/hotel-2.png",
-        "src/assets/images/hotel-3.png",
-        "src/assets/images/hotel-4.png",
-        "src/assets/images/hotel-5.png",
-      ],
-      price: 100,
-      discount: 20,
-    },
-  ],
+  currentPage: 1,
 });
 
-const { selectedfilter, filterDropdown, propertyCards } = toRefs(data);
+const { selectedfilter, filterDropdown, currentPage } = toRefs(data);
+
+const handlePageChange = (page) => {
+  currentPage.value = page;
+  propertiesPagination.value.showing[0] = page * 20 - 19;
+
+  if (page * 20 > propertiesPagination.value.totalItems) {
+    propertiesPagination.value.showing[1] =
+      propertiesPagination.value.totalItems;
+  } else {
+    propertiesPagination.value.showing[1] = page * 20;
+  }
+};
 
 const setSelectedFilter = (id) => {
   selectedfilter.value = id;
@@ -155,8 +124,13 @@ const scrollTop = () => {
           ></path>
         </svg>
       </div>
-      <h1 class="text-lg font-bold mt-4 md:mt-0">
-        Singapore: 9999 properties found
+      <h1
+        v-if="!getProperiesLoading && !getPropertiesError"
+        class="text-lg font-bold mt-4 md:mt-0"
+      >
+        {{ selectedCityNameToShow }}:
+        {{ properties.length === 0 ? 0 : propertiesPagination.totalItems }}
+        properties found
       </h1>
       <section
         class="hidden md:flex rounded-md bg-white h-[45px] mt-3 text-base"
@@ -218,8 +192,10 @@ const scrollTop = () => {
       </section>
       <article class="mt-5">
         <PropertyCard
-          v-if="true"
-          v-for="card in propertyCards"
+          v-if="
+            !getProperiesLoading && !getPropertiesError && properties.length > 0
+          "
+          v-for="card in properties"
           :key="card.id"
           :title="card.title"
           :stars="card.stars"
@@ -233,7 +209,11 @@ const scrollTop = () => {
           :discount="card.discount"
         />
         <div
-          v-else-if="!getProperiesLoading && properties.length === 0"
+          v-else-if="
+            !getProperiesLoading &&
+            !getPropertiesError &&
+            properties.length === 0
+          "
           class="py-14 text-lg text-center flex flex-col justify-center items-center font-bold text-medium-grey"
         >
           <img
@@ -264,7 +244,10 @@ const scrollTop = () => {
     </section>
 
     <!-- Pagination (Bottom) Section -->
-    <section class="flex flex-col lg:flex-row justify-between my-10 lg:my-0">
+    <section
+      v-if="!getProperiesLoading && !getPropertiesError"
+      class="flex flex-col lg:flex-row justify-between my-10 lg:my-0"
+    >
       <div class="flex justify-between mb-5 lg:mb-0">
         <button class="text-primary text-base" @click="scrollTop">
           Back to top
@@ -273,12 +256,19 @@ const scrollTop = () => {
         <span class="inline lg:hidden">showing result 1 - 20 of 9999</span>
       </div>
       <div class="flex items-center text-base gap-4">
-        <span class="hidden lg:inline">showing result 1 - 20 of 9999</span>
+        <span class="hidden lg:inline"
+          >showing result {{ propertiesPagination.showing[0] }} -
+          {{ propertiesPagination.showing[1] }} of
+          {{
+            properties.length === 0 ? 0 : propertiesPagination.totalItems
+          }}</span
+        >
         <vue-awesome-paginate
-          :total-items="255"
+          :total-items="propertiesPagination.totalItems"
           :items-per-page="20"
           :max-pages-shown="6"
-          :current-page="1"
+          :on-click="handlePageChange"
+          o
         >
           <template #prev-button>
             <span>

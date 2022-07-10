@@ -6,9 +6,10 @@ const {
   showSuggestions,
   locationSearchLoading,
   onSelectCity,
-  locationSearchData,
   fetchLocationSearch,
+  locationSearchInput,
   filteredLocationSearchData,
+  searchProperties,
 } = locationSearchStore();
 const { width: windowWidth } = useWindowSize();
 
@@ -51,6 +52,7 @@ const closeSuggestions = () => {
           placeholder="Singapore, Singapore"
           autocomplete="off"
           @click="openSuggestions"
+          v-model="locationSearchInput"
         />
         <span
           v-if="locationSearchLoading && windowWidth > 768"
@@ -94,6 +96,7 @@ const closeSuggestions = () => {
         </div>
       </div>
       <button
+        @click="searchProperties"
         class="ml-2 text-lg h-[50px] px-12 rounded-sm bg-secondary hidden md:inline"
       >
         Search
