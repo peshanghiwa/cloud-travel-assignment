@@ -1,13 +1,20 @@
 <script setup>
 import Card from "../utility/Card.vue";
-import locationSearchData from "../../composables/locationSearch";
+import locationSearchStore from "../../composables/locationSearch";
 import Slider from "@vueform/slider";
 import { reactive, toRefs, computed } from "vue";
 import { useWindowSize } from "vue-window-size";
 import CheckboxList from "../utility/CheckboxList.vue";
 import sortbyFilterData from "../../composables/sortbyFilter";
 
-let { showLocationSearch } = locationSearchData();
+let {
+  showLocationSearchModal,
+  showSuggestions,
+  locationSearchLoading,
+  onSelectCity,
+  locationSearchData,
+  fetchLocationSearch,
+} = locationSearchStore();
 
 const {
   sortbyOptionsList,
@@ -25,11 +32,6 @@ const starsImgGenerator = (number) => {
 };
 
 const data = reactive({
-  cityCodes: [
-    { label: "Singapore, Singapore", cityCode: "sgsg" },
-    { label: "Kuala Lumpur, Malaysia", cityCode: "klmy" },
-    { label: "Manila, Philippines", cityCode: "mlph" },
-  ],
   showSidebarFilters: false,
   rangeSliderValue: [0, 0],
   hotelName: "",
@@ -281,7 +283,6 @@ const {
   mealPlansCheckboxListData,
   propertyTypesCheckboxListData,
   facilitiesCheckboxListData,
-  cityCodes,
 } = toRefs(data);
 
 const minSGDShow = computed(() => {
@@ -316,6 +317,21 @@ const clearAllFilters = () => {
 
 const applyFilters = () => {
   showSidebarFilters.value = false;
+};
+
+const closeSuggestions = () => {
+  showSuggestions.value = false;
+};
+
+const openSuggestions = async () => {
+  await fetchLocationSearch();
+  showSuggestions.value = true;
+  // if (windowWidth.value < 768 && !showLocationSearchModal.value) {
+  //   showSuggestions.value = true;
+  //   showLocationSearchModal.value = true;
+  // } else {
+  //   showLocationSearchModal.value = false;
+  // }
 };
 </script>
 <template>
@@ -515,11 +531,11 @@ const applyFilters = () => {
 
   <!-- Location search container -->
   <aside
-    v-if="windowWidth > 975 || showLocationSearch"
+    v-if="windowWidth > 975 || showLocationSearchModal"
     class="w-full lg:w-[290px] absolute top-0 left-0 bottom-0 right-0 lg:hidden flex-col gap-y-3 z-20 lg:z-0 bg-white px-4"
   >
     <div
-      v-if="windowWidth < 975 || showLocationSearch"
+      v-if="windowWidth < 975 || showLocationSearchModal"
       class="h-[55px] bg-white border-b-[2px] border-b-light-grey fixed top-0 left-0 right-0 z-30 text-lg flex items-center px-5"
     >
       <img
@@ -527,7 +543,7 @@ const applyFilters = () => {
         height="15"
         width="15"
         class="mr-5 cursor-pointer"
-        @click="showLocationSearch = false"
+        @click="showLocationSearchModal = false"
       />
       <span class="font-bold"> Where? </span>
     </div>
@@ -546,20 +562,42 @@ const applyFilters = () => {
           />
         </button>
       </span>
+
       <input
         type="text"
         class="w-full md:w-[470px] h-[40px] text-base text-black rounded-sm pl-10 outline-none"
         placeholder="Singapore, Singapore"
         autocomplete="off"
+        @click="openSuggestions"
       />
+      <span
+        v-if="
+          locationSearchLoading && windowWidth < 768 && showLocationSearchModal
+        "
+        class="absolute inset-y-0 right-0 flex items-center pl-2"
+      >
+        <button
+          type="submit"
+          class="p-1 focus:outline-none focus:shadow-outline"
+        >
+          <img
+            src="../../assets/SVGs/loading.svg"
+            class="h-[40px]"
+            alt="Search Icon"
+          />
+        </button>
+      </span>
       <div
-        v-if="false"
-        class="w-full md:w-[470px] absolute custom-border rounded top-12 md:top-[55px] left-0 bg-white border-light-grey text-black z-40"
+        v-click-outside="closeSuggestions"
+        v-if="showSuggestions"
+        class="w-full md:w-[470px] absolute custom-border rounded top-12 md:top-[55px] left-0 bg-white text-black z-40 border-[2px] border-light-grey shadow-xl"
       >
         <div
-          v-for="city in cityCodes"
+          v-if="locationSearchData.length > 0"
+          v-for="city in locationSearchData"
           :key="city.cityCode"
           class="bg-white cursor-pointer hover:bg-light-grey text-black p-3 flex"
+          @click="onSelectCity(city.cityCode)"
         >
           <img
             src="../../assets/SVGs/location.svg"
@@ -569,6 +607,9 @@ const applyFilters = () => {
             alt=""
           />
           {{ city.label }}
+        </div>
+        <div v-else class="text-base text-center text-medium-grey py-4">
+          No Suggestions Found
         </div>
       </div>
     </div>
