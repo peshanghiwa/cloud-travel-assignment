@@ -1,6 +1,6 @@
 <script setup>
 import sortbyFilterData from "../../composables/sortbyFilter";
-import { reactive, toRefs } from "vue";
+import { onMounted, reactive, toRefs } from "vue";
 import PropertyCard from "../utility/PropertyCard.vue";
 import Shimmer from "../utility/shimmer.vue";
 import locationSearch from "../../composables/locationSearch";
@@ -24,9 +24,10 @@ const data = reactive({
   selectedfilter: 1,
   filterDropdown: false,
   currentPage: 1,
+  stopDelay: false,
 });
 
-const { selectedfilter, filterDropdown, currentPage } = toRefs(data);
+const { selectedfilter, filterDropdown, currentPage, stopDelay } = toRefs(data);
 
 const handlePageChange = (page) => {
   currentPage.value = page;
@@ -48,6 +49,12 @@ const setSelectedFilter = (id) => {
 const scrollTop = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
+
+onMounted(() => {
+  setTimeout(() => {
+    stopDelay.value = true;
+  }, 2000);
+});
 </script>
 
 <template>
@@ -221,7 +228,7 @@ const scrollTop = () => {
         >
           <PropertyCard
             v-for="(card, index) in properties"
-            :style="`transition-delay: ${index * 200}ms`"
+            :style="`transition-delay: ${stopDelay ? 0 : index * 200}ms`"
             :key="card.id"
             :title="card.title"
             :stars="card.stars"
