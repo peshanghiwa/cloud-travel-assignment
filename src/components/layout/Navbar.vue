@@ -69,6 +69,24 @@ const closeSuggestions = () => {
             />
           </button>
         </span>
+        <span
+          v-if="
+            !locationSearchLoading && windowWidth > 768 && locationSearchInput
+          "
+          class="absolute inset-y-0 right-0 flex items-center pl-2"
+        >
+          <button
+            type="submit"
+            class="p-1 focus:outline-none focus:shadow-outline"
+            @click="locationSearchInput = ''"
+          >
+            <img
+              src="../../assets/SVGs/close.svg"
+              class="h-[15px] mr-1"
+              alt="Search Icon"
+            />
+          </button>
+        </span>
         <Transition name="fadedown" mode="in-out">
           <div
             v-click-outside="closeSuggestions"
