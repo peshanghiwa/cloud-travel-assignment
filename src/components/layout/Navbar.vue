@@ -8,6 +8,7 @@ const {
   onSelectCity,
   locationSearchData,
   fetchLocationSearch,
+  filteredLocationSearchData,
 } = locationSearchStore();
 const { width: windowWidth } = useWindowSize();
 
@@ -72,8 +73,8 @@ const closeSuggestions = () => {
           class="w-full md:w-[470px] absolute border-[1px] rounded top-12 md:top-[55px] left-0 bg-white border-light-grey text-black z-40 shadow-2xl"
         >
           <div
-            v-if="locationSearchData.length > 0"
-            v-for="city in locationSearchData"
+            v-if="filteredLocationSearchData.length > 0"
+            v-for="city in filteredLocationSearchData"
             :key="city.cityCode"
             class="bg-white cursor-pointer hover:bg-light-grey text-black p-3 flex"
             @click="onSelectCity(city.cityCode)"

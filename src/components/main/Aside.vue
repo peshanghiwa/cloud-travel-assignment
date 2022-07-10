@@ -14,6 +14,7 @@ let {
   onSelectCity,
   locationSearchData,
   fetchLocationSearch,
+  filteredLocationSearchData,
 } = locationSearchStore();
 
 const {
@@ -26,7 +27,8 @@ const {
 const starsImgGenerator = (number) => {
   let stars = '<div class="flex gap-x-[2px]">';
   for (let i = 0; i < number; i++) {
-    stars += '<img src="/src/assets/SVGs/star.svg" height="15" width="15" />';
+    stars +=
+      '<img src="/src/assets/SVGs/full-star.svg" height="15" width="15" />';
   }
   return stars + "</div>";
 };
@@ -326,12 +328,6 @@ const closeSuggestions = () => {
 const openSuggestions = async () => {
   await fetchLocationSearch();
   showSuggestions.value = true;
-  // if (windowWidth.value < 768 && !showLocationSearchModal.value) {
-  //   showSuggestions.value = true;
-  //   showLocationSearchModal.value = true;
-  // } else {
-  //   showLocationSearchModal.value = false;
-  // }
 };
 </script>
 <template>
@@ -593,8 +589,8 @@ const openSuggestions = async () => {
         class="w-full md:w-[470px] absolute custom-border rounded top-12 md:top-[55px] left-0 bg-white text-black z-40 border-[2px] border-light-grey shadow-xl"
       >
         <div
-          v-if="locationSearchData.length > 0"
-          v-for="city in locationSearchData"
+          v-if="filteredLocationSearchData.length > 0"
+          v-for="city in filteredLocationSearchData"
           :key="city.cityCode"
           class="bg-white cursor-pointer hover:bg-light-grey text-black p-3 flex"
           @click="onSelectCity(city.cityCode)"
