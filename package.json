@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@vueform/slider": "^2.0.10",
+    "axios": "^0.27.2",
     "vue": "^3.2.25",
     "vue-awesome-paginate": "^0.0.9",
     "vue-click-outside": "^1.1.0",
