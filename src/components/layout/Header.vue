@@ -97,7 +97,7 @@ const changeCurrency = (currency) => {
     >
       <img
         src="../../assets/SVGs/logo.svg"
-        class="h-[25px] md:h-[35px]"
+        class="h-[25px] md:h-[35px] cursor-pointer"
         alt="Cloud Travel Logo"
       />
       <!-- Large Screen Design Only -->

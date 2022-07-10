@@ -6,3 +6,9 @@
 $ npm i
 $ npm run dev
 ```
+
+## To run Tests
+
+```bash
+$ npm run test
+```
