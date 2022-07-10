@@ -1,8 +1,8 @@
 <script setup>
 import sortbyFilterData from "../../composables/sortbyFilter";
 import { reactive, toRefs } from "vue";
-import PropertyCard from "./PropertyCard.vue";
-import Shimmer from "./shimmer.vue";
+import PropertyCard from "../utility/PropertyCard.vue";
+import Shimmer from "../utility/shimmer.vue";
 import locationSearch from "../../composables/locationSearch";
 
 const {
