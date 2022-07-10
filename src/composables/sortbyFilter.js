@@ -3,13 +3,15 @@ import { reactive, toRefs, computed } from "vue";
 const data = reactive({
   showSortbyFilters: false,
   selectedSortby: 1,
+  showSidebarFilters: false,
   sortByOptions: [
     { id: 1, text: "Price (lowest first)" },
     { id: 2, text: "Price (highest first)" },
   ],
 });
 
-const { selectedSortby, sortByOptions, showSortbyFilters } = toRefs(data);
+const { selectedSortby, sortByOptions, showSortbyFilters, showSidebarFilters } =
+  toRefs(data);
 
 const sortbyOptionsList = computed(() => {
   return sortByOptions.value.filter((option) => {
@@ -33,4 +35,5 @@ export default () => ({
   selectedSortbyOption,
   showSortbyFilters,
   onSelectSortby,
+  showSidebarFilters,
 });

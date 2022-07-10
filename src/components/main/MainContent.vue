@@ -140,13 +140,23 @@ const scrollTop = () => {
           :class="{
             'bg-primary': selectedfilter === 1,
             'text-white': selectedfilter === 1,
+            'hover:opacity-90': selectedfilter === 1,
+            'active:opacity-70': selectedfilter === 1,
+            'hover:bg-light-grey': selectedfilter !== 1,
+            'active:bg-medium-grey': selectedfilter !== 1,
           }"
           @click="setSelectedFilter(1)"
         >
           Popularity
         </button>
         <div
-          class="w-full h-full border-r-[1px] cursor-pointer border-r-light-grey flex justify-center items-center relative z-[2]"
+          class="w-full h-full border-r-[1px] cursor-pointer border-r-light-grey flex justify-center items-center relative z-[2] transition duration-200"
+          :class="{
+            'hover:opacity-90': selectedfilter === 2,
+            'active:opacity-70': selectedfilter === 2,
+            'hover:bg-light-grey': selectedfilter !== 2,
+            'active:bg-medium-grey': selectedfilter !== 2,
+          }"
         >
           <div
             class="w-full h-full absolute top-0 left-0"
@@ -159,21 +169,27 @@ const scrollTop = () => {
             width="10"
             class="ml-2"
           />
-          <button
-            v-if="showSortbyFilters"
-            v-for="option in sortbyOptionsList"
-            :key="option.id"
-            @click="onSelectSortby(option.id)"
-            class="w-full h-full absolute top-[50px] bg-white rounded-md shadow-md hover:bg-primary hover:text-white transition-all duration-150"
-          >
-            {{ option.text }}
-          </button>
+          <TransitionGroup name="fadedown" mode="in-out">
+            <button
+              v-if="showSortbyFilters"
+              v-for="option in sortbyOptionsList"
+              :key="option.id"
+              @click="onSelectSortby(option.id)"
+              class="w-full h-full absolute top-[50px] bg-white rounded-md shadow-md hover:bg-primary hover:text-white transition-all duration-150"
+            >
+              {{ option.text }}
+            </button>
+          </TransitionGroup>
         </div>
         <button
           class="w-full h-full border-r-[1px] border-r-light-grey flex justify-center items-center transition-all duration-150"
           :class="{
             'bg-primary': selectedfilter === 2,
             'text-white': selectedfilter === 2,
+            'hover:opacity-90': selectedfilter === 2,
+            'active:opacity-70': selectedfilter === 2,
+            'hover:bg-light-grey': selectedfilter !== 2,
+            'active:bg-medium-grey': selectedfilter !== 2,
           }"
           @click="setSelectedFilter(2)"
         >
@@ -184,6 +200,10 @@ const scrollTop = () => {
           :class="{
             'bg-primary': selectedfilter === 3,
             'text-white': selectedfilter === 3,
+            'hover:opacity-90': selectedfilter === 3,
+            'active:opacity-70': selectedfilter === 3,
+            'hover:bg-light-grey': selectedfilter !== 3,
+            'active:bg-medium-grey': selectedfilter !== 3,
           }"
           @click="setSelectedFilter(3)"
         >
@@ -191,23 +211,31 @@ const scrollTop = () => {
         </button>
       </section>
       <article class="mt-5">
-        <PropertyCard
+        <TransitionGroup
+          name="fadeup"
+          mode="in-out"
+          appear
           v-if="
             !getProperiesLoading && !getPropertiesError && properties.length > 0
           "
-          v-for="card in properties"
-          :key="card.id"
-          :title="card.title"
-          :stars="card.stars"
-          :location="card.location"
-          :comment="card.comment"
-          :labels="card.labels"
-          :health="card.health"
-          :mainImage="card.mainImage"
-          :images="card.images"
-          :price="card.price"
-          :discount="card.discount"
-        />
+        >
+          <PropertyCard
+            v-for="(card, index) in properties"
+            :style="`transition-delay: ${index * 200}ms`"
+            :key="card.id"
+            :title="card.title"
+            :stars="card.stars"
+            :location="card.location"
+            :comment="card.comment"
+            :labels="card.labels"
+            :health="card.health"
+            :mainImage="card.mainImage"
+            :images="card.images"
+            :price="card.price"
+            :discount="card.discount"
+          />
+        </TransitionGroup>
+
         <div
           v-else-if="
             !getProperiesLoading &&

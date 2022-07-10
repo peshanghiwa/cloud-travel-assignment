@@ -38,12 +38,36 @@
 
 .fadedown-enter-active,
 .fadedown-leave-active {
-  transition: all 0.16s ease;
+  transition: all 0.2s ease;
   transform: translateY(0px);
 }
 
 .fadedown-enter-from,
 .fadedown-leave-to {
   transform: translateY(-10px);
+  opacity: 0;
+}
+
+.longfadedown-enter-active,
+.longfadedown-leave-active {
+  transition: all 0.4s ease;
+  transform: translateY(0px);
+}
+
+.longfadedown-enter-from,
+.longfadedown-leave-to {
+  transform: translateY(-70px);
+  opacity: 0;
+}
+
+.fadeup-enter-active,
+.fadeup-leave-active {
+  transition: all 0.7s ease;
+  transform: translateY(0px);
+}
+
+.fadeup-enter-from,
+.fadeup-leave-to {
+  transform: translateY(30px);
   opacity: 0;
 }

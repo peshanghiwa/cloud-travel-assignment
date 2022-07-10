@@ -69,35 +69,37 @@ const closeSuggestions = () => {
             />
           </button>
         </span>
-        <div
-          v-click-outside="closeSuggestions"
-          v-if="showSuggestions"
-          class="w-full md:w-[470px] absolute border-[1px] rounded top-12 md:top-[55px] left-0 bg-white border-light-grey text-black z-40 shadow-2xl"
-        >
+        <Transition name="fadedown" mode="in-out">
           <div
-            v-if="filteredLocationSearchData.length > 0"
-            v-for="city in filteredLocationSearchData"
-            :key="city.cityCode"
-            class="bg-white cursor-pointer hover:bg-light-grey text-black p-3 flex"
-            @click="onSelectCity(city.cityCode)"
+            v-click-outside="closeSuggestions"
+            v-if="showSuggestions"
+            class="w-full md:w-[470px] absolute border-[1px] rounded top-12 md:top-[55px] left-0 bg-white border-light-grey text-black z-40 shadow-2xl"
           >
-            <img
-              src="../../assets/SVGs/location.svg"
-              height="15"
-              width="15"
-              class="mr-2"
-              alt=""
-            />
-            {{ city.label }}
+            <div
+              v-if="filteredLocationSearchData.length > 0"
+              v-for="city in filteredLocationSearchData"
+              :key="city.cityCode"
+              class="bg-white cursor-pointer hover:bg-light-grey text-black p-3 flex"
+              @click="onSelectCity(city.cityCode)"
+            >
+              <img
+                src="../../assets/SVGs/location.svg"
+                height="15"
+                width="15"
+                class="mr-2"
+                alt=""
+              />
+              {{ city.label }}
+            </div>
+            <div v-else class="text-base text-center text-medium-grey py-4">
+              No Suggestions Found
+            </div>
           </div>
-          <div v-else class="text-base text-center text-medium-grey py-4">
-            No Suggestions Found
-          </div>
-        </div>
+        </Transition>
       </div>
       <button
         @click="searchProperties"
-        class="ml-2 text-lg h-[50px] px-12 rounded-sm bg-secondary hidden md:inline"
+        class="ml-2 text-lg h-[50px] px-12 rounded-sm bg-secondary hidden md:inline transition duration-150 hover:bg-opacity-80 active:bg-opacity-50"
       >
         Search
       </button>

@@ -1,6 +1,11 @@
 <script setup>
 import Aside from "../main/Aside.vue";
 import MainContent from "../main/MainContent.vue";
+import locationSearchStore from "../../composables/locationSearch";
+import sortbyFilterData from "../../composables/sortbyFilter";
+
+const { showLocationSearchModal } = locationSearchStore();
+const { showSidebarFilters } = sortbyFilterData();
 </script>
 
 <template>
@@ -8,7 +13,7 @@ import MainContent from "../main/MainContent.vue";
     class="custom-size w-full px-0 lg:px-0 lg:w-[85%] mx-auto flex flex-col lg:flex-row my-0 lg:my-[30px] gap-x-4"
   >
     <Aside />
-    <MainContent />
+    <MainContent v-if="!showLocationSearchModal && !showSidebarFilters" />
   </main>
 </template>
 <style>
