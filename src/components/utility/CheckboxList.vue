@@ -38,7 +38,7 @@ const toggleShowMore = (state) => {
           :id="`${uniqueId}-checkbox-${checkbox.id}`"
           v-model="checkbox.value"
           @change="$emit('update:modelValue', modelValue)"
-          class="w-[15px] h-[15px] text-primary bg-white rounded border-dark-grey focus:ring-primary accent-primary"
+          class="checkbox-input w-[15px] h-[15px] text-primary bg-white rounded border-dark-grey focus:ring-primary accent-primary"
         />
         <label
           class="text-sm text-dark-grey relative left-2"
@@ -54,7 +54,7 @@ const toggleShowMore = (state) => {
   </div>
   <button
     v-if="originalLimit !== -1"
-    class="flex justify-center items-center hover:underline"
+    class="flex justify-center items-center hover:underline show-more-button"
     @click="toggleShowMore(limit < modelValue.length)"
   >
     <span class="text-sm">

@@ -26,7 +26,7 @@ const listToShow = computed(() => {
       <div
         v-if="index < 3"
         :key="index"
-        class="text-sm text-secondary border-[1px] px-1 border-secondary hover:bg-secondary hover:text-white transitoin duration-200 cursor-pointer capitalize"
+        class="label-list text-sm text-secondary border-[1px] px-1 border-secondary hover:bg-secondary hover:text-white transitoin duration-200 cursor-pointer capitalize"
       >
         {{ item }}
       </div>
@@ -39,7 +39,7 @@ const listToShow = computed(() => {
     >
       <div
         @mouseover="showTooltip = true"
-        class="text-sm text-secondary border-[1px] px-1 border-secondary hover:bg-secondary hover:text-white transitoin duration-200 cursor-pointer capitalize relative"
+        class="popper text-sm text-secondary border-[1px] px-1 border-secondary hover:bg-secondary hover:text-white transitoin duration-200 cursor-pointer capitalize relative"
       >
         +{{ list.length - 3 }}
       </div>
