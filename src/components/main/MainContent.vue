@@ -4,6 +4,7 @@ import { reactive, toRefs } from "vue";
 import PropertyCard from "./PropertyCard.vue";
 import Shimmer from "./shimmer.vue";
 // import PropertyCardShimmer from "./propertyCardShimmer.vue";
+  getPropertiesError,
 
 const {
   sortbyOptionsList,
@@ -242,7 +243,21 @@ const scrollTop = () => {
             alt=""
             class="mb-3"
           />
-          <div>Sorry! We couldn't find any properties for your search.</div>
+          <h3>Sorry! We couldn't find any properties for your search.</h3>
+        </div>
+        <div
+          v-else-if="!getProperiesLoading && getPropertiesError"
+          class="py-14 flex text-center flex-col justify-center items-center text-medium-grey"
+        >
+          <img
+            src="../../assets/SVGs/error.svg"
+            height="25"
+            width="25"
+            alt=""
+            class="mb-3"
+          />
+          <h3 class="font-bold text-lg">Opps, something went wrong.</h3>
+          <p class="text-sm">{{ getPropertiesError }}</p>
         </div>
         <Shimmer v-else />
       </article>
