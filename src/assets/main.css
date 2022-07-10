@@ -35,3 +35,15 @@
   --popper-theme-padding: 15px;
   --popper-theme-box-shadow: 0 6px 30px -6px rgba(0, 0, 0, 0.25);
 }
+
+.fadedown-enter-active,
+.fadedown-leave-active {
+  transition: all 0.16s ease;
+  transform: translateY(0px);
+}
+
+.fadedown-enter-from,
+.fadedown-leave-to {
+  transform: translateY(-10px);
+  opacity: 0;
+}

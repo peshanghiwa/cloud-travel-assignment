@@ -62,6 +62,7 @@ const closeLanguagesDropdown = () => {
 const closeCurrenciesDropdown = () => {
   showCurrenciesDropdown.value = false;
 };
+
 // languages dropdown logic
 const renderedLanguages = computed(() =>
   languages.value.filter((language) => !language.selected)
@@ -103,37 +104,40 @@ const changeCurrency = (currency) => {
       <ul class="hidden md:flex gap-x-4 z-100">
         <li>
           <button
-            class="px-3 py-1.5 text-black text-lg transition duration-150 ease-in-out flex items-center"
+            class="px-3 py-1.5 text-black text-lg transition duration-150 ease-in-out flex items-center hover:text-primary"
             type="button"
             @click="showLanguagesDropdown = !showLanguagesDropdown"
           >
             {{ selectedLanguage.name }}
             <img
               src="../../assets/SVGs/arrow-down.svg"
-              class="w-2 ml-2"
+              class="w-2 ml-2 transform"
               height="30"
               width="30"
+              :class="[showLanguagesDropdown ? 'rotate-180' : '']"
               alt="Arrow Down"
             />
           </button>
-          <ul
-            v-click-outside="closeLanguagesDropdown"
-            class="absolute text-base py-1 list-none shadow-lg m-0 z-[100]"
-            v-if="showLanguagesDropdown"
-          >
-            <li
-              v-for="(language, index) in renderedLanguages"
-              :key="index"
-              class="dropdown-item cursor-pointer text-lg py-2 px-4 bg-transparent transition duration-150 text-black bg-white hover:bg-light-grey"
-              @click="changeLanguage(language)"
+          <Transition name="fadedown" mode="in-out">
+            <ul
+              v-click-outside="closeLanguagesDropdown"
+              class="absolute text-base py-1 list-none shadow-lg m-0 z-[100] border-[2px] border-light-grey"
+              v-if="showLanguagesDropdown"
             >
-              {{ language.name }}
-            </li>
-          </ul>
+              <li
+                v-for="(language, index) in renderedLanguages"
+                :key="index"
+                class="dropdown-item cursor-pointer text-lg py-2 px-4 bg-transparent transition duration-150 text-black bg-white hover:bg-light-grey"
+                @click="changeLanguage(language)"
+              >
+                {{ language.name }}
+              </li>
+            </ul>
+          </Transition>
         </li>
         <li>
           <button
-            class="px-3 py-1.5 text-black text-lg transition duration-150 ease-in-out flex items-center"
+            class="px-3 py-1.5 text-black text-lg transition duration-150 ease-in-out flex items-center hover:text-primary"
             type="button"
             @click="showCurrenciesDropdown = !showCurrenciesDropdown"
           >
@@ -144,27 +148,30 @@ const changeCurrency = (currency) => {
               height="30"
               width="30"
               alt=""
+              :class="[showCurrenciesDropdown ? 'rotate-180' : '']"
             />
           </button>
-          <ul
-            v-click-outside="closeCurrenciesDropdown"
-            class="absolute text-base py-1 list-none shadow-lg m-0 z-[100]"
-            v-if="showCurrenciesDropdown"
-          >
-            <li
-              v-for="(currency, index) in renderedCurrencies"
-              :key="index"
-              class="dropdown-item cursor-pointer text-lg py-2 px-4 bg-transparent transition duration-150 text-black bg-white hover:bg-light-grey"
-              @click="changeCurrency(currency)"
+          <Transition name="fadedown" mode="in-out">
+            <ul
+              v-click-outside="closeCurrenciesDropdown"
+              class="absolute text-base py-1 list-none shadow-lg m-0 z-[100] border-[2px] border-light-grey"
+              v-if="showCurrenciesDropdown"
             >
-              {{ currency.name }}
-            </li>
-          </ul>
+              <li
+                v-for="(currency, index) in renderedCurrencies"
+                :key="index"
+                class="dropdown-item cursor-pointer text-lg py-2 px-4 bg-transparent transition duration-150 text-black bg-white hover:bg-light-grey"
+                @click="changeCurrency(currency)"
+              >
+                {{ currency.name }}
+              </li>
+            </ul>
+          </Transition>
         </li>
-        <li>
+        <li class="transition duration-200 hover:text-primary">
           <button class="px-3 py-1.5">My Account</button>
         </li>
-        <li>
+        <li class="transition duration-200 hover:text-primary">
           <button class="px-3 py-1.5">Log Out</button>
         </li>
       </ul>
@@ -179,101 +186,110 @@ const changeCurrency = (currency) => {
             srcset=""
           />
         </button>
-        <div
-          class="overflow-y-auto absolute right-2 w-[180px] py-4 px-3 bg-dark-grey rounded shadow-sm z-50"
-          v-if="showSidebar"
-          v-click-outside="onOutsideSidebarClick"
-        >
-          <ul class="space-y-2">
-            <li>
-              <button
-                type="button"
-                class="flex items-center p-2 w-full text-lg text-white rounded-lg transition duration-75 group hover:bg-secondary"
-                @click="showLanguagesDropdown = !showLanguagesDropdown"
-              >
-                <span class="flex-1 text-left whitespace-nowrap">{{
-                  selectedLanguage.name
-                }}</span>
-                <svg
-                  class="w-6 h-6 transform transition duration-200"
-                  :class="[showLanguagesDropdown ? 'rotate-180' : '']"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
+        <Transition name="fadedown" mode="in-out">
+          <div
+            class="overflow-y-auto absolute right-2 w-[180px] py-4 px-3 bg-dark-grey rounded shadow-sm z-50"
+            v-if="showSidebar"
+            v-click-outside="onOutsideSidebarClick"
+          >
+            <ul class="space-y-2">
+              <li>
+                <button
+                  type="button"
+                  class="flex items-center p-2 w-full text-lg text-white rounded-lg transition duration-75 group hover:bg-secondary"
+                  @click="showLanguagesDropdown = !showLanguagesDropdown"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-              <ul v-if="showLanguagesDropdown" class="py-2 space-y-2">
-                <li v-for="(language, index) in renderedLanguages" :key="index">
-                  <button
-                    @click="changeLanguage(language)"
-                    class="flex items-center justify-center p-2 w-full text-base text-white rounded-lg transition duration-75 group hover:bg-secondary"
+                  <span class="flex-1 text-left whitespace-nowrap">{{
+                    selectedLanguage.name
+                  }}</span>
+                  <svg
+                    class="w-6 h-6 transform transition duration-200"
+                    :class="[showLanguagesDropdown ? 'rotate-180' : '']"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    {{ language.name }}
-                  </button>
-                </li>
-              </ul>
-            </li>
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+                <Transition name="fadedown" mode="in-out">
+                  <ul v-if="showLanguagesDropdown" class="py-2 space-y-2">
+                    <li
+                      v-for="(language, index) in renderedLanguages"
+                      :key="index"
+                    >
+                      <button
+                        @click="changeLanguage(language)"
+                        class="flex items-center justify-center p-2 w-full text-base text-white rounded-lg transition duration-75 group hover:bg-secondary"
+                      >
+                        {{ language.name }}
+                      </button>
+                    </li>
+                  </ul>
+                </Transition>
+              </li>
 
-            <li>
-              <button
-                type="button"
-                class="flex items-center p-2 w-full text-lg text-white rounded-lg transition duration-75 group hover:bg-secondary"
-                @click="showCurrenciesDropdown = !showCurrenciesDropdown"
-              >
-                <span class="flex-1 text-left whitespace-nowrap">{{
-                  selectedCurrency.name
-                }}</span>
-                <svg
-                  class="w-6 h-6 transform transition duration-200"
-                  :class="[showCurrenciesDropdown ? 'rotate-180' : '']"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
+              <li>
+                <button
+                  type="button"
+                  class="flex items-center p-2 w-full text-lg text-white rounded-lg transition duration-75 group hover:bg-secondary"
+                  @click="showCurrenciesDropdown = !showCurrenciesDropdown"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-              <ul v-if="showCurrenciesDropdown" class="py-2 space-y-2">
-                <li
-                  v-for="(currency, index) in renderedCurrencies"
-                  :key="index"
-                >
-                  <button
-                    @click="changeCurrency(currency)"
-                    class="flex items-center justify-center p-2 w-full text-base text-white rounded-lg transition duration-75 group hover:bg-secondary"
+                  <span class="flex-1 text-left whitespace-nowrap">{{
+                    selectedCurrency.name
+                  }}</span>
+                  <svg
+                    class="w-6 h-6 transform transition duration-200"
+                    :class="[showCurrenciesDropdown ? 'rotate-180' : '']"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    {{ currency.name }}
-                  </button>
-                </li>
-              </ul>
-            </li>
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+                <Transition name="fadedown" mode="in-out">
+                  <ul v-if="showCurrenciesDropdown" class="py-2 space-y-2">
+                    <li
+                      v-for="(currency, index) in renderedCurrencies"
+                      :key="index"
+                    >
+                      <button
+                        @click="changeCurrency(currency)"
+                        class="flex items-center justify-center p-2 w-full text-base text-white rounded-lg transition duration-75 group hover:bg-secondary"
+                      >
+                        {{ currency.name }}
+                      </button>
+                    </li>
+                  </ul>
+                </Transition>
+              </li>
 
-            <li class="">
-              <button
-                class="flex items-center p-2 text-lg rounded-lg text-white hover:bg-secondary w-full"
-              >
-                My Account
-              </button>
-            </li>
-            <li class="">
-              <button
-                class="flex items-center p-2 text-lg rounded-lg text-white hover:bg-secondary w-full"
-              >
-                Log Out
-              </button>
-            </li>
-          </ul>
-        </div>
+              <li class="">
+                <button
+                  class="flex items-center p-2 text-lg rounded-lg text-white hover:bg-secondary w-full"
+                >
+                  My Account
+                </button>
+              </li>
+              <li class="">
+                <button
+                  class="flex items-center p-2 text-lg rounded-lg text-white hover:bg-secondary w-full"
+                >
+                  Log Out
+                </button>
+              </li>
+            </ul>
+          </div>
+        </Transition>
       </div>
     </div>
   </header>
