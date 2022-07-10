@@ -231,6 +231,19 @@ const scrollTop = () => {
           :price="card.price"
           :discount="card.discount"
         />
+        <div
+          v-else-if="!getProperiesLoading && properties.length === 0"
+          class="py-14 text-lg text-center flex flex-col justify-center items-center font-bold text-medium-grey"
+        >
+          <img
+            src="../../assets/SVGs/search.svg"
+            height="25"
+            width="25"
+            alt=""
+            class="mb-3"
+          />
+          <div>Sorry! We couldn't find any properties for your search.</div>
+        </div>
         <Shimmer v-else />
       </article>
     </section>
