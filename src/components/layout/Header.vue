@@ -100,7 +100,7 @@ const changeCurrency = (currency) => {
         class="h-[25px] md:h-[35px]"
         alt="Cloud Travel Logo"
       />
-      <!-- Large Screen Only -->
+      <!-- Large Screen Design Only -->
       <ul class="hidden md:flex gap-x-4 z-100">
         <li>
           <button
@@ -176,7 +176,7 @@ const changeCurrency = (currency) => {
         </li>
       </ul>
 
-      <!-- Mobile Screen Only -->
+      <!-- Mobile Screen Design Only (Burger Menu) -->
       <div class="block md:hidden">
         <button @click="showSidebar = !showSidebar">
           <img
