@@ -188,9 +188,15 @@ const searchProperties = async () => {
     properties.value = formatPropertiesData(results);
     propertiesPagination.value = pagination;
     getProperiesLoading.value = false;
+    if (showLocationSearchModal.value) {
+      showLocationSearchModal.value = false;
+    }
   } catch (error) {
     getProperiesLoading.value = false;
     getPropertiesError.value = error.response.data.message;
+    if (showLocationSearchModal.value) {
+      showLocationSearchModal.value = false;
+    }
     return [];
   }
 };
@@ -210,10 +216,6 @@ const onSelectCity = async (cityCode) => {
   selectedCityName.value = selectedCity.label.split(",")[0];
 
   selectedCityCode.value = cityCode;
-  showSuggestions.value = false;
-  if (showLocationSearchModal.value) {
-    showLocationSearchModal.value = false;
-  }
 };
 
 const filteredLocationSearchData = computed(() => {

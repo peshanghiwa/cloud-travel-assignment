@@ -245,7 +245,9 @@ const scrollTop = () => {
 
     <!-- Pagination (Bottom) Section -->
     <section
-      v-if="!getProperiesLoading && !getPropertiesError"
+      v-if="
+        !getProperiesLoading && !getPropertiesError && properties.length > 0
+      "
       class="flex flex-col lg:flex-row justify-between my-10 lg:my-0"
     >
       <div class="flex justify-between mb-5 lg:mb-0">
